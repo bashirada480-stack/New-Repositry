@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyDevice Control</string>
+    <string name="dashboard_title">Control Center</string>
+    <string name="device_agent_title">Device Agent</string>
+    <string name="battery_status">Battery Status</string>
+    <string name="network_status">Network Status</string>
+    <string name="storage_status">Storage Status</string>
+    <string name="permissions_title">Security &amp; Permissions</string>
+    <string name="sync_status">Synchronization</string>
+    <string name="events_title">Activity &amp; Audit Logs</string>
+</resources>

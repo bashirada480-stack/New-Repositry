@@ -1,0 +1,6 @@
+{
+  "name": "MyDevice Control Center",
+  "description": "Secure Android monitoring and management companion app with real-time telemetry, battery, network, storage, permissions audit, and web dashboard integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

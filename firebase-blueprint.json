@@ -1,0 +1,110 @@
+{
+  "title": "MyDevice Control Center Database Blueprint",
+  "version": "1.0.0",
+  "collections": [
+    {
+      "path": "users/{userId}",
+      "description": "Authenticated user profiles with authorization credentials and fleet counts",
+      "fields": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "Account email address" },
+        "displayName": { "type": "string", "description": "User friendly name" },
+        "createdAt": { "type": "timestamp", "description": "Account registration timestamp" },
+        "registeredDevicesCount": { "type": "number", "description": "Total devices enrolled" }
+      }
+    },
+    {
+      "path": "users/{userId}/devices/{deviceId}",
+      "description": "Authorized device metadata and real-time telemetry snapshot",
+      "fields": {
+        "deviceId": { "type": "string", "description": "Unique device hardware fingerprint identifier" },
+        "userId": { "type": "string", "description": "Associated user owner UID" },
+        "deviceName": { "type": "string", "description": "Customizable device label" },
+        "model": { "type": "string", "description": "Android Build.MODEL" },
+        "manufacturer": { "type": "string", "description": "Android Build.MANUFACTURER" },
+        "androidVersion": { "type": "string", "description": "Android OS release version" },
+        "apiLevel": { "type": "number", "description": "Android SDK API level integer" },
+        "appVersion": { "type": "string", "description": "Companion agent version" },
+        "status": { "type": "string", "enum": ["ONLINE", "IDLE", "OFFLINE"] },
+        "battery": {
+          "type": "map",
+          "fields": {
+            "level": { "type": "number", "description": "0-100 percentage" },
+            "isCharging": { "type": "boolean" },
+            "chargingType": { "type": "string", "enum": ["AC", "USB", "Wireless", "None"] },
+            "temperatureCelsius": { "type": "number" },
+            "health": { "type": "string" },
+            "voltageMv": { "type": "number" }
+          }
+        },
+        "network": {
+          "type": "map",
+          "fields": {
+            "isConnected": { "type": "boolean" },
+            "type": { "type": "string", "enum": ["Wi-Fi", "Cellular", "Ethernet", "Disconnected"] },
+            "ipAddress": { "type": "string" },
+            "ssid": { "type": "string", "optional": true },
+            "isMetered": { "type": "boolean" },
+            "linkDownstreamBandwidthKbps": { "type": "number" }
+          }
+        },
+        "storage": {
+          "type": "map",
+          "fields": {
+            "totalBytes": { "type": "number" },
+            "availableBytes": { "type": "number" },
+            "usedBytes": { "type": "number" },
+            "usedPercentage": { "type": "number" }
+          }
+        },
+        "permissions": {
+          "type": "map",
+          "fields": {
+            "locationFine": { "type": "boolean" },
+            "locationCoarse": { "type": "boolean" },
+            "notifications": { "type": "boolean" },
+            "usageStats": { "type": "boolean" }
+          }
+        },
+        "isLocationSharingEnabled": { "type": "boolean" },
+        "lastLocation": {
+          "type": "map",
+          "optional": true,
+          "fields": {
+            "latitude": { "type": "number" },
+            "longitude": { "type": "number" },
+            "accuracyMeters": { "type": "number" },
+            "timestamp": { "type": "timestamp" }
+          }
+        },
+        "isAppUsageSharingEnabled": { "type": "boolean" },
+        "topAppUsage": {
+          "type": "array",
+          "items": {
+            "packageName": { "type": "string" },
+            "appName": { "type": "string" },
+            "totalTimeInForegroundMillis": { "type": "number" },
+            "lastTimeUsed": { "type": "timestamp" }
+          }
+        },
+        "isScreenSharingActive": { "type": "boolean" },
+        "lastSyncTimestamp": { "type": "timestamp" },
+        "registeredAt": { "type": "timestamp" }
+      }
+    },
+    {
+      "path": "users/{userId}/devices/{deviceId}/events/{eventId}",
+      "description": "Immutable security and activity audit records",
+      "fields": {
+        "id": { "type": "string" },
+        "deviceId": { "type": "string" },
+        "deviceName": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "timestamp": { "type": "timestamp" },
+        "severity": { "type": "string", "enum": ["INFO", "SUCCESS", "WARNING", "ALERT"] }
+      }
+    }
+  ]
+}
